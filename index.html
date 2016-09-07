@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Workshop: How to install programs from source</title>
-<!-- 2016-09-07 Wed 09:26 -->
+<!-- 2016-09-07 Wed 09:36 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="William Oquendo" />
@@ -233,7 +233,8 @@ find /usr/lib -iname <span style="color: #CC9393;">"*libfoo*"</span>
 <p>
 In this case we will install everything under the <code>~/local</code>
 subdirectory inside your home, so create it. The utilies will then
-create the appropriate folders there.
+create the appropriate folders there. <b>NOTE:</b> Better use the <code>$HOME</code>
+var instead of <code>~</code>.
 </p>
 </div>
 </div>
@@ -268,11 +269,11 @@ important info regarding the program.
 </div>
 <p>
 to check all the available options. Since we want to install
-on the <code>~/local</code> directory, then we need to use
+on the <code>$HOME/local</code> directory, then we need to use
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">./configure --prefix=~/local
+<pre class="src src-sh">./configure --prefix=$<span style="color: #DFAF8F;">HOME</span>/local
 </pre>
 </div>
 <p>
@@ -290,7 +291,7 @@ to do the following:
 
 <pre class="src src-sh">mkdir build <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">creates a build directory to put there the temporary built files</span>
 <span style="color: #DCDCCC; font-weight: bold;">cd</span> build 
-cmake ../ -DCMAKE_INSTALL_PREFIX:<span style="color: #DFAF8F;">PATH</span>=~/local <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">configure the building process for the source code located on the parent directory</span>
+cmake ../ -DCMAKE_INSTALL_PREFIX:<span style="color: #DFAF8F;">PATH</span>=$<span style="color: #DFAF8F;">HOME</span>/local <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">configure the building process for the source code located on the parent directory</span>
 </pre>
 </div>
 </li>
@@ -328,15 +329,15 @@ compiler where to find the libraries/includes, so you need
 something like
 <div class="org-src-container">
 
-<pre class="src src-sh">g++ -L ~/local/lib -I ~/local/include -llibname programname.cpp
+<pre class="src src-sh">g++ -L $<span style="color: #DFAF8F;">HOME</span>/local/lib -I $<span style="color: #DFAF8F;">HOME</span>/local/include -llibname programname.cpp
 </pre>
 </div>
 <ul class="org-ul">
-<li><code>-L ~/local/lib</code> tells the compiler to look for libraries on
-the <code>~/local/lib</code> directory.
+<li><code>-L $HOME/local/lib</code> tells the compiler to look for libraries on
+the <code>$HOME/local/lib</code> directory.
 </li>
-<li><code>-I ~/local/include</code> tells the compiler to look for include
-files on the <code>~/local/include</code> directory.
+<li><code>-I $HOME/local/include</code> tells the compiler to look for include
+files on the <code>$HOME/local/include</code> directory.
 </li>
 <li><code>-llibname</code> tells the compiler to link with the given
 library. Sometimes is not needed. Sometimes is crucial.
@@ -541,7 +542,7 @@ Based on <a href="https://github.com/blog/2242-git-2-10-has-been-released">https
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">~/local/bin/git --version
+<pre class="src src-sh">$<span style="color: #DFAF8F;">HOME</span>/local/bin/git --version
 </pre>
 </div>
 <p>
@@ -550,19 +551,19 @@ the following (this only works on the latest git)
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh">~/local/bin/git config color.diff.old <span style="color: #CC9393;">"red strike"</span>
-~/local/bin/git config color.diff.new <span style="color: #CC9393;">"green italic"</span>
-~/local/bin/git diff
+<pre class="src src-sh">$<span style="color: #DFAF8F;">HOME</span>/local/bin/git config color.diff.old <span style="color: #CC9393;">"red strike"</span>
+$<span style="color: #DFAF8F;">HOME</span>/local/bin/git config color.diff.new <span style="color: #CC9393;">"green italic"</span>
+$<span style="color: #DFAF8F;">HOME</span>/local/bin/git diff
 </pre>
 </div>
 <p>
-Maybe you can create an alias, <code>alias git=~/local/bin/git</code>, or you
+Maybe you can create an alias, <code>alias git=$HOME/local/bin/git</code>, or you
 can modify the <code>PATH</code> permanently by adding the following to your
-<code>~/.bash_profile</code> file :
+<code>$HOME/.bash_profile</code> file :
 </p>
 <div class="org-src-container">
 
-<pre class="src src-sh"><span style="color: #DCDCCC; font-weight: bold;">export</span> <span style="color: #DFAF8F;">PATH</span>=~/local/bin:$<span style="color: #DFAF8F;">PATH</span>
+<pre class="src src-sh"><span style="color: #DCDCCC; font-weight: bold;">export</span> <span style="color: #DFAF8F;">PATH</span>=$<span style="color: #DFAF8F;">HOME</span>/local/bin:$<span style="color: #DFAF8F;">PATH</span>
 </pre>
 </div>
 </div>
@@ -646,7 +647,7 @@ On gnuplot do the following:
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: William Oquendo</p>
-<p class="date">Created: 2016-09-07 Wed 09:26</p>
+<p class="date">Created: 2016-09-07 Wed 09:36</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

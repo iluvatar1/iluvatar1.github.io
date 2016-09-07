@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Workshop: How to install programs from source</title>
+<!-- 2016-09-07 Wed 05:13 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="William Oquendo" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Workshop: How to install programs from source</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Checking the version for already installed programs</a></li>
+<li><a href="#sec-2">2. Preparing the local places to install the utilities</a></li>
+<li><a href="#sec-3">3. Typical installation algorithm</a></li>
+<li><a href="#sec-4">4. Workshop</a></li>
+<li><a href="#sec-5">5. Test Programs</a>
+<ul>
+<li><a href="#sec-5-1">5.1. fftw</a></li>
+<li><a href="#sec-5-2">5.2. Eigen C++</a></li>
+<li><a href="#sec-5-3">5.3. Git</a></li>
+<li><a href="#sec-5-4">5.4. Voro++</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+In this workshop we will learn how to install a program from source to
+the home directory of the user. We will use the following programs,
+some of them already available at the computer room:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="right" />
+
+<col  class="right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Name</th>
+<th scope="col" class="right">installed version</th>
+<th scope="col" class="right">latest version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><a href="http://www.fftw.org/">fftw</a></td>
+<td class="right">3.3.2</td>
+<td class="right">3.3.5</td>
+</tr>
+
+<tr>
+<td class="left"><a href="http://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen C++</a></td>
+<td class="right">3.1.0</td>
+<td class="right">3.2.9</td>
+</tr>
+
+<tr>
+<td class="left"><a href="https://git-scm.com/">git</a></td>
+<td class="right">1.9.1</td>
+<td class="right">2.10.0</td>
+</tr>
+
+<tr>
+<td class="left"><a href="http://math.lbl.gov/voro++/">voro++</a></td>
+<td class="right">Not installed</td>
+<td class="right">0.4.6</td>
+</tr>
+</tbody>
+</table>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Checking the version for already installed programs</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+If you used <code>apt-get</code> or something related, you can use the package
+manager to check. But, in general, you can check the versions by
+looking at the appropriate places on your system. Typically,
+libraries are installed under <code>/usr/lib</code> or <code>/usr/local/lib</code>, while
+include files are installed under <code>/usr/include</code> or
+<code>/usr/local/include</code> . Normally, if you are looking fir library
+<code>foo</code>, then you should look for the file <code>libfoo.a</code> or <code>libfoo.so</code>
+. One usefull utility for this is the command <code>locate</code> or <code>find</code> .
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">locate libfoo
+find /usr/lib -iname <span style="color: #CC9393;">"*libfoo*"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Preparing the local places to install the utilities</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+In this case we will install everything under the <code>~/local</code>
+subdirectory inside your home, so create it. The utilies will then
+create the appropriate folders there.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Typical installation algorithm</h2>
+<div class="outline-text-2" id="text-3">
+<ol class="org-ol">
+<li>Download the source from the project page. This normally implies
+downloading a tarball (file ending with <code>.tar.gz</code> or <code>.tar.bz2</code>) .
+</li>
+<li>Un-compress the downloaded file. For a tarball, the command will
+be
+<div class="org-src-container">
+
+<pre class="src src-sh">tar xf filename.tar.gz
+</pre>
+</div>
+</li>
+<li>Enter to the newly uncompressed folder (almost always usually <code>cd
+     filename</code>).
+</li>
+<li><b>READ</b> the <code>README</code> and/or the <code>INSTALL</code> file to check for
+important info regarding the program.
+</li>
+<li><b>CONFIGURATION:</b> You have two options. 
+<ol class="org-ol">
+<li>If the program has a configure script, then just run
+<div class="org-src-container">
+
+<pre class="src src-sh">./configure --help
+</pre>
+</div>
+<p>
+to check all the available options. Since we want to install
+on the <code>~/local</code> directory, then we need to use
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">./configure --prefix=~/local
+</pre>
+</div>
+<p>
+If you don't specify the prefix, then the program will be
+installed on the <code>/usr/bin</code> or <code>/usr/local/bin</code>, whatever is
+the default.  If this commands ends successfully, it will
+print some info to the screen and will tell you to go to the
+next step. Otherwise you will need to read the log and fix the
+errors (like installing a dependency). 
+</p>
+</li>
+<li>If the program uses cmake, a make configurator, then you need
+to do the following:
+<div class="org-src-container">
+
+<pre class="src src-sh">mkdir build <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">creates a build directory to put there the temporary built files</span>
+<span style="color: #DCDCCC; font-weight: bold;">cd</span> build 
+cmake ../ <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">configure the building process for the source code located on the parent directory</span>
+</pre>
+</div>
+</li>
+</ol>
+</li>
+<li><b>COMPILATION:</b> Now that you have configured your system, you need
+to compile by using the GNU make utility (<i>Note:</i> All this build
+utilities come from the gnu organization and are free software as
+in freedom). If you have several cores, you can use them in
+parallel, assuming the that the Makefile and your make versions
+supports it:
+<div class="org-src-container">
+
+<pre class="src src-sh">make -j 3 <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">for three cores, but, if you are unsure, just use one core.</span>
+</pre>
+</div>
+</li>
+<li><b>INSTALLATION</b> After successful compilation, you can install by using 
+<div class="org-src-container">
+
+<pre class="src src-sh">make install
+</pre>
+</div>
+<p>
+This will install the program (libraries, binaries, include
+files, manual files, etc) onto the <code>prefix</code> directory. If you
+want to instll system-wide (you did not set the <code>prefix</code>), then
+you need to use <code>sudo make install</code> .
+</p>
+</li>
+<li><b>TESTING</b> In this case use a program to test your
+installation. In this case, when you compile your program and you
+want to use the version that you installed, you need to tell the
+compiler where to find the libraries/includes, so you need
+something like
+<div class="org-src-container">
+
+<pre class="src src-sh">g++ -L ~/local/lib -I ~/local/include -llibname programname.cpp
+</pre>
+</div>
+<ul class="org-ul">
+<li><code>-L ~/local/lib</code> tells the compiler to look for libraries on
+the <code>~/local/lib</code> directory.
+</li>
+<li><code>-I ~/local/include</code> tells the compiler to look for include
+files on the <code>~/local/include</code> directory.
+</li>
+<li><code>-llibname</code> tells the compiler to link with the given
+library. Sometimes is not needed. Sometimes is crucial.
+</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Workshop</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+For each of the proposed utilities written at the beginning, follow the next procedure:
+</p>
+<ul class="org-ul">
+<li>Check the installed version number and compare with the latest one.
+</li>
+<li>Install the latest version on your home directory by following the
+procedure stated above.
+</li>
+<li>Run each of the following example program but make sure you a re
+using you installed version. Show to the instructor the
+compilation line.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Test Programs</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> fftw</h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">From : https://github.com/undees/fftw-example</span>
+<span style="color: #5F7F5F;">/* </span><span style="color: #7F9F7F;">Start reading here </span><span style="color: #5F7F5F;">*/</span>
+
+<span style="color: #94BFF3;">#include</span> <span style="color: #CC9393;">&lt;fftw3.h&gt;</span>
+
+<span style="color: #94BFF3;">#define</span> <span style="color: #DFAF8F;">NUM_POINTS</span> 128
+
+
+<span style="color: #5F7F5F;">/* </span><span style="color: #7F9F7F;">Never mind this bit </span><span style="color: #5F7F5F;">*/</span>
+
+<span style="color: #94BFF3;">#include</span> <span style="color: #CC9393;">&lt;stdio.h&gt;</span>
+<span style="color: #94BFF3;">#include</span> <span style="color: #CC9393;">&lt;math.h&gt;</span>
+
+<span style="color: #94BFF3;">#define</span> <span style="color: #DFAF8F;">REAL</span> 0
+<span style="color: #94BFF3;">#define</span> <span style="color: #DFAF8F;">IMAG</span> 1
+
+<span style="color: #7CB8BB;">void</span> <span style="color: #93E0E3;">acquire_from_somewhere</span>(<span style="color: #7CB8BB;">fftw_complex</span>* <span style="color: #DFAF8F;">signal</span>) {
+  <span style="color: #5F7F5F;">/* </span><span style="color: #7F9F7F;">Generate two sine waves of different frequencies and</span>
+<span style="color: #7F9F7F;">   * amplitudes.</span>
+<span style="color: #7F9F7F;">   </span><span style="color: #5F7F5F;">*/</span>
+
+  <span style="color: #7CB8BB;">int</span> <span style="color: #DFAF8F;">i</span>;
+  <span style="color: #F0DFAF; font-weight: bold;">for</span> (i = 0; i &lt; NUM_POINTS; ++i) {
+    <span style="color: #7CB8BB;">double</span> <span style="color: #DFAF8F;">theta</span> = (<span style="color: #7CB8BB;">double</span>)i / (<span style="color: #7CB8BB;">double</span>)<span style="color: #7CB8BB;">NUM_POINTS</span> * <span style="color: #DFAF8F;">M_PI</span>;
+
+    signal[i][REAL] = 1.0 * cos(10.0 * theta) +
+      0.5 * cos(25.0 * theta);
+
+    signal[i][IMAG] = 1.0 * sin(10.0 * theta) +
+      0.5 * sin(25.0 * theta);
+  }
+}
+
+<span style="color: #7CB8BB;">void</span> <span style="color: #93E0E3;">do_something_with</span>(<span style="color: #7CB8BB;">fftw_complex</span>* <span style="color: #DFAF8F;">result</span>) {
+  <span style="color: #7CB8BB;">int</span> <span style="color: #DFAF8F;">i</span>;
+  <span style="color: #F0DFAF; font-weight: bold;">for</span> (i = 0; i &lt; NUM_POINTS; ++i) {
+    <span style="color: #7CB8BB;">double</span> <span style="color: #DFAF8F;">mag</span> = sqrt(result[i][REAL] * result[i][REAL] +
+                      result[i][IMAG] * result[i][IMAG]);
+
+    printf(<span style="color: #CC9393;">"%g\n"</span>, mag);
+  }
+}
+
+
+<span style="color: #5F7F5F;">/* </span><span style="color: #7F9F7F;">Resume reading here </span><span style="color: #5F7F5F;">*/</span>
+
+<span style="color: #7CB8BB;">int</span> <span style="color: #93E0E3;">main</span>() {
+  <span style="color: #7CB8BB;">fftw_complex</span> <span style="color: #DFAF8F;">signal</span>[NUM_POINTS];
+  <span style="color: #7CB8BB;">fftw_complex</span> <span style="color: #DFAF8F;">result</span>[NUM_POINTS];
+
+  <span style="color: #7CB8BB;">fftw_plan</span> <span style="color: #DFAF8F;">plan</span> = fftw_plan_dft_1d(NUM_POINTS,
+                                    signal,
+                                    result,
+                                    FFTW_FORWARD,
+                                    FFTW_ESTIMATE);
+
+  acquire_from_somewhere(signal);
+  fftw_execute(plan);
+  do_something_with(result);
+
+  fftw_destroy_plan(plan);
+
+  <span style="color: #F0DFAF; font-weight: bold;">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Eigen C++</h3>
+<div class="outline-text-3" id="text-5-2">
+<hr  />
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #94BFF3;">#include</span> <span style="color: #CC9393;">&lt;iostream&gt;</span>
+<span style="color: #94BFF3;">#include</span> <span style="color: #CC9393;">&lt;Eigen/Dense&gt;</span>
+<span style="color: #7CB8BB;">using</span> <span style="color: #DFAF8F;">Eigen</span>::MatrixXd;
+<span style="color: #7CB8BB;">int</span> <span style="color: #93E0E3;">main</span>()
+{
+  std::cout &lt;&lt; EIGEN_MAYOR_VERSION &lt;&lt; std::endl;
+  std::cout &lt;&lt; EIGEN_MINOR_VERSION &lt;&lt; std::endl;
+  <span style="color: #7CB8BB;">MatrixXd</span> <span style="color: #DFAF8F;">m</span>(2,2);
+  m(0,0) = 3;
+  m(1,0) = 2.5;
+  m(0,1) = -1;
+  m(1,1) = m(1,0) + m(0,1);
+  std::cout &lt;&lt; m &lt;&lt; std::endl;
+}
+</pre>
+</div>
+<hr  />
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #94BFF3;">#include</span> <span style="color: #CC9393;">&lt;iostream&gt;</span>
+<span style="color: #94BFF3;">#include</span> <span style="color: #CC9393;">&lt;Eigen/Dense&gt;</span>
+using <span style="color: #7CB8BB;">namespace</span> <span style="color: #DFAF8F;">Eigen</span>;
+<span style="color: #7CB8BB;">int</span> <span style="color: #93E0E3;">main</span>()
+{
+  <span style="color: #7CB8BB;">Matrix2d</span> <span style="color: #DFAF8F;">a</span>;
+  a &lt;&lt; 1, 2,
+    3, 4;
+  <span style="color: #7CB8BB;">MatrixXd</span> <span style="color: #DFAF8F;">b</span>(2,2);
+  b &lt;&lt; 2, 3,
+    1, 4;
+  std::cout &lt;&lt; <span style="color: #CC9393;">"a + b =\n"</span> &lt;&lt; a + b &lt;&lt; std::endl;
+  std::cout &lt;&lt; <span style="color: #CC9393;">"a - b =\n"</span> &lt;&lt; a - b &lt;&lt; std::endl;
+  std::cout &lt;&lt; <span style="color: #CC9393;">"Doing a += b;"</span> &lt;&lt; std::endl;
+  a += b;
+  std::cout &lt;&lt; <span style="color: #CC9393;">"Now a =\n"</span> &lt;&lt; a &lt;&lt; std::endl;
+  <span style="color: #7CB8BB;">Vector3d</span> <span style="color: #DFAF8F;">v</span>(1,2,3);
+  <span style="color: #7CB8BB;">Vector3d</span> <span style="color: #DFAF8F;">w</span>(1,0,0);
+  std::cout &lt;&lt; <span style="color: #CC9393;">"-v + w - v =\n"</span> &lt;&lt; -v + w - v &lt;&lt; std::endl;
+}
+</pre>
+</div>
+<hr  />
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #94BFF3;">#include</span> <span style="color: #CC9393;">&lt;iostream&gt;</span>
+<span style="color: #94BFF3;">#include</span> <span style="color: #CC9393;">&lt;Eigen/Dense&gt;</span>
+using <span style="color: #7CB8BB;">namespace</span> <span style="color: #DFAF8F;">std</span>;
+using <span style="color: #7CB8BB;">namespace</span> <span style="color: #DFAF8F;">Eigen</span>;
+<span style="color: #7CB8BB;">int</span> <span style="color: #93E0E3;">main</span>()
+{
+  <span style="color: #7CB8BB;">Matrix3f</span> <span style="color: #DFAF8F;">A</span>;
+  <span style="color: #7CB8BB;">Vector3f</span> <span style="color: #DFAF8F;">b</span>;
+  A &lt;&lt; 1,2,3,  4,5,6,  7,8,10;
+  b &lt;&lt; 3, 3, 4;
+  cout &lt;&lt; <span style="color: #CC9393;">"Here is the matrix A:\n"</span> &lt;&lt; A &lt;&lt; endl;
+  cout &lt;&lt; <span style="color: #CC9393;">"Here is the vector b:\n"</span> &lt;&lt; b &lt;&lt; endl;
+  <span style="color: #7CB8BB;">Vector3f</span> <span style="color: #DFAF8F;">x</span> = A.colPivHouseholderQr().solve(b);
+  cout &lt;&lt; <span style="color: #CC9393;">"The solution is:\n"</span> &lt;&lt; x &lt;&lt; endl;
+}
+</pre>
+</div>
+<hr  />
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #94BFF3;">#include</span> <span style="color: #CC9393;">&lt;iostream&gt;</span>
+<span style="color: #94BFF3;">#include</span> <span style="color: #CC9393;">&lt;Eigen/Dense&gt;</span>
+using <span style="color: #7CB8BB;">namespace</span> <span style="color: #DFAF8F;">std</span>;
+using <span style="color: #7CB8BB;">namespace</span> <span style="color: #DFAF8F;">Eigen</span>;
+<span style="color: #7CB8BB;">int</span> <span style="color: #93E0E3;">main</span>()
+{
+  <span style="color: #7CB8BB;">Matrix2f</span> <span style="color: #DFAF8F;">A</span>;
+  A &lt;&lt; 1, 2, 2, 3;
+  cout &lt;&lt; <span style="color: #CC9393;">"Here is the matrix A:\n"</span> &lt;&lt; A &lt;&lt; endl;
+  SelfAdjointEigenSolver&lt;Matrix2f&gt; eigensolver(A);
+  <span style="color: #F0DFAF; font-weight: bold;">if</span> (eigensolver.info() != Success) abort();
+  cout &lt;&lt; <span style="color: #CC9393;">"The eigenvalues of A are:\n"</span> &lt;&lt; eigensolver.eigenvalues() &lt;&lt; endl;
+  cout &lt;&lt; <span style="color: #CC9393;">"Here's a matrix whose columns are eigenvectors of A \n"</span>
+       &lt;&lt; <span style="color: #CC9393;">"corresponding to these eigenvalues:\n"</span>
+       &lt;&lt; eigensolver.eigenvectors() &lt;&lt; endl;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> Git</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Based on <a href="https://github.com/blog/2242-git-2-10-has-been-released">https://github.com/blog/2242-git-2-10-has-been-released</a> . 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">~/local/bin/git --version
+</pre>
+</div>
+<p>
+Enter some repository you already have, make some changes, and run
+the following (this only works on the latest git)
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">~/local/bin/git config color.diff.old <span style="color: #CC9393;">"red strike"</span>
+~/local/bin/git config color.diff.new <span style="color: #CC9393;">"green italic"</span>
+~/local/bin/git diff
+</pre>
+</div>
+<p>
+Maybe you can create an alias, <code>alias git=~/local/bin/git</code>, or you
+can modify the <code>PATH</code> permanently by adding the following to your
+<code>~/.bash_profile</code> file :
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #DCDCCC; font-weight: bold;">export</span> <span style="color: #DFAF8F;">PATH</span>=~/local/bin:$<span style="color: #DFAF8F;">PATH</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> Voro++</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+Use <a href="http://math.lbl.gov/voro++/examples/random_points/"><a href="http://math.lbl.gov/voro++/examples/random_points/">http://math.lbl.gov/voro++/examples/random_points/</a></a>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">Voronoi calculation example code</span>
+<span style="color: #5F7F5F;">//</span>
+<span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">Author   : Chris H. Rycroft (LBL / UC Berkeley)</span>
+<span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">Email    : chr@alum.mit.edu</span>
+<span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">Date     : August 30th 2011</span>
+
+<span style="color: #94BFF3;">#include</span> <span style="color: #CC9393;">"voro++.hh"</span>
+using <span style="color: #7CB8BB;">namespace</span> <span style="color: #DFAF8F;">voro</span>;
+
+<span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">Set up constants for the container geometry</span>
+<span style="color: #F0DFAF; font-weight: bold;">const</span> <span style="color: #7CB8BB;">double</span> <span style="color: #DFAF8F;">x_min</span>=-1,<span style="color: #DFAF8F;">x_max</span>=1;
+<span style="color: #F0DFAF; font-weight: bold;">const</span> <span style="color: #7CB8BB;">double</span> <span style="color: #DFAF8F;">y_min</span>=-1,<span style="color: #DFAF8F;">y_max</span>=1;
+<span style="color: #F0DFAF; font-weight: bold;">const</span> <span style="color: #7CB8BB;">double</span> <span style="color: #DFAF8F;">z_min</span>=-1,<span style="color: #DFAF8F;">z_max</span>=1;
+<span style="color: #F0DFAF; font-weight: bold;">const</span> <span style="color: #7CB8BB;">double</span> <span style="color: #DFAF8F;">cvol</span>=(x_max-x_min)*(y_max-y_min)*(x_max-x_min);
+
+<span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">Set up the number of blocks that the container is divided into</span>
+<span style="color: #F0DFAF; font-weight: bold;">const</span> <span style="color: #7CB8BB;">int</span> <span style="color: #DFAF8F;">n_x</span>=6,<span style="color: #DFAF8F;">n_y</span>=6,<span style="color: #DFAF8F;">n_z</span>=6;
+
+<span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">Set the number of particles that are going to be randomly introduced</span>
+<span style="color: #F0DFAF; font-weight: bold;">const</span> <span style="color: #7CB8BB;">int</span> <span style="color: #DFAF8F;">particles</span>=20;
+
+<span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">This function returns a random double between 0 and 1</span>
+<span style="color: #7CB8BB;">double</span> <span style="color: #93E0E3;">rnd</span>() {<span style="color: #F0DFAF; font-weight: bold;">return</span> <span style="color: #7CB8BB;">double</span>(rand())/RAND_MAX;}
+
+<span style="color: #7CB8BB;">int</span> <span style="color: #93E0E3;">main</span>() {
+  <span style="color: #7CB8BB;">int</span> <span style="color: #DFAF8F;">i</span>;
+  <span style="color: #7CB8BB;">double</span> <span style="color: #DFAF8F;">x</span>,<span style="color: #DFAF8F;">y</span>,<span style="color: #DFAF8F;">z</span>;
+
+  <span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">Create a container with the geometry given above, and make it</span>
+  <span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">non-periodic in each of the three coordinates. Allocate space for</span>
+  <span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">eight particles within each computational block</span>
+  <span style="color: #7CB8BB;">container</span> <span style="color: #DFAF8F;">con</span>(x_min,x_max,y_min,y_max,z_min,z_max,n_x,n_y,n_z,
+                <span style="color: #BFEBBF;">false</span>,<span style="color: #BFEBBF;">false</span>,<span style="color: #BFEBBF;">false</span>,8);
+
+  <span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">Randomly add particles into the container</span>
+  <span style="color: #F0DFAF; font-weight: bold;">for</span>(i=0;i&lt;particles;i++) {
+    x=x_min+rnd()*(x_max-x_min);
+    y=y_min+rnd()*(y_max-y_min);
+    z=z_min+rnd()*(z_max-z_min);
+    con.put(i,x,y,z);
+  }
+
+  <span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">Sum up the volumes, and check that this matches the container volume</span>
+  <span style="color: #7CB8BB;">double</span> <span style="color: #DFAF8F;">vvol</span>=con.sum_cell_volumes();
+  printf(<span style="color: #CC9393;">"Container volume : %g\n"</span>
+         <span style="color: #CC9393;">"Voronoi volume   : %g\n"</span>
+         <span style="color: #CC9393;">"Difference       : %g\n"</span>,cvol,vvol,vvol-cvol);
+
+  <span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">Output the particle positions in gnuplot format</span>
+  con.draw_particles(<span style="color: #CC9393;">"random_points_p.gnu"</span>);
+
+  <span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">Output the Voronoi cells in gnuplot format</span>
+  con.draw_cells_gnuplot(<span style="color: #CC9393;">"random_points_v.gnu"</span>);
+}
+</pre>
+</div>
+
+<p>
+On gnuplot do the following:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-gnuplot"><span style="color: #F0DFAF; font-weight: bold;">splot</span> <span style="color: #CC9393;">"random_points_p.gnu"</span> u 2:3:4, <span style="color: #CC9393;">"random_points_v.gnu"</span> <span style="color: #7CB8BB;">with</span> <span style="color: #93E0E3;">lines</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: William Oquendo</p>
+<p class="date">Created: 2016-09-07 Wed 05:13</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

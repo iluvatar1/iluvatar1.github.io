@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Workshop: How to install programs from source</title>
-<!-- 2016-09-07 Wed 09:36 -->
+<!-- 2016-09-07 Wed 09:45 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="William Oquendo" />
@@ -343,6 +343,15 @@ files on the <code>$HOME/local/include</code> directory.
 library. Sometimes is not needed. Sometimes is crucial.
 </li>
 </ul>
+<p>
+If the linker is giving you errors, you can try by configuring
+the linker as
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #DCDCCC; font-weight: bold;">export</span> <span style="color: #DFAF8F;">LD_LIBRARY_PATH</span>=$<span style="color: #DFAF8F;">HOME</span>/local/lib:$<span style="color: #DFAF8F;">LD_LIBRARY_PATH</span>
+</pre>
+</div>
 </li>
 </ol>
 </div>
@@ -647,7 +656,7 @@ On gnuplot do the following:
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: William Oquendo</p>
-<p class="date">Created: 2016-09-07 Wed 09:36</p>
+<p class="date">Created: 2016-09-07 Wed 09:45</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
